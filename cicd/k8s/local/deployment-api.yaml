@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: users-core-smartone-api
+  namespace: smartone-local
+spec:
+  selector:
+    matchLabels:
+      app: users-core-smartone-api
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: users-core-smartone-api
+    spec:
+      containers:
+        - name: api
+          image: localhost:32000/users.core.smartone:1.0.0
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+          env:
+            - name: DB_DATABASE
+              value: "db_smartone"
+            - name: DB_HOST
+              value: "192.168.71.200"
+            - name: DB_PASSWORD
+              value: "U7fiLttFrIrdvVkk"
+            - name: DB_PORT
+              value: "3901"
+            - name: DB_USERNAME
+              value: "root"
+            - name: SERVER_PORT
+              value: "80"
+            - name: JWT_SECRET
+              value: "KzM4cSA1vrP4mbta"
