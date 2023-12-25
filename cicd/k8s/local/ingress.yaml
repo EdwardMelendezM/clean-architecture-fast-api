@@ -1,8 +1,8 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: smartone-ingress
-  namespace: smartone-local
+  name: test-ingress
+  namespace: test-local
   annotations:
     nginx.ingress.kubernetes.io/proxy-body-size: "100m"
     nginx.ingress.kubernetes.io/proxy-connect-timeout: '600'
@@ -10,20 +10,13 @@ metadata:
     nginx.ingress.kubernetes.io/proxy-read-timeout: '600'
 spec:
   rules:
-    - host: local.smartone.onscp.com
+    - host: local.test.me.com
       http:
         paths:
-          - path: /api/v1/core/users
+          - path: /api/v1/products
             pathType: Prefix
             backend:
               service:
-                name: users-core-smartone-api-service
+                name: products-test-api-service
                 port:
-                  number: 9010
-          - path: /api/v1/auth/login
-            pathType: Prefix
-            backend:
-              service:
-                name: users-core-smartone-api-service
-                port:
-                  number: 9010
+                  number: 9000

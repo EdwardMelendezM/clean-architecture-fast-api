@@ -1,27 +1,27 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: users-core-smartone-api
-  namespace: smartone-local
+  name: product-test-api
+  namespace: test-local
 spec:
   selector:
     matchLabels:
-      app: users-core-smartone-api
+      app: product-test-api
   replicas: 1
   template:
     metadata:
       labels:
-        app: users-core-smartone-api
+        app: product-test-api
     spec:
       containers:
         - name: api
-          image: localhost:32000/users.core.smartone:1.0.0
+          image: localhost:32000/products.test:1.0.0
           imagePullPolicy: Always
           ports:
             - containerPort: 80
           env:
             - name: DB_DATABASE
-              value: "db_smartone"
+              value: "db_test"
             - name: DB_HOST
               value: "192.168.71.200"
             - name: DB_PASSWORD
