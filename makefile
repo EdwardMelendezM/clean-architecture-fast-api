@@ -6,5 +6,5 @@ deploy-local-products:
 	docker push localhost:32000/products.test:1.0.0
 	rm -f /dist
 
-deploy-local-pod:
-    kubert
+create_mocks_products:
+    pytest

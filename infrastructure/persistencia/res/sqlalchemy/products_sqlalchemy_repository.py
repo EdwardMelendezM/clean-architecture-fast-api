@@ -7,15 +7,7 @@ from sqlalchemy.orm import sessionmaker
 from domain.products_entities import Product, CreateBodyProduct, UpdateBodyProduct
 from domain.products_repository import ProductsRepository
 from infrastructure.persistencia.res.sqlalchemy.products_sqlalchemy_model import Base, ProductEntity
-
-
-def _map_entity_to_domain(product_entity: ProductEntity) -> Product:
-    return Product(
-        product_id=product_entity.product_id,
-        name=product_entity.name,
-        price=product_entity.price,
-        description=product_entity.description
-    )
+from infrastructure.persistencia.res.sqlalchemy.products_sqlalchemy_helper import _map_entity_to_domain
 
 
 class MySQLProductsRepository(ProductsRepository):
