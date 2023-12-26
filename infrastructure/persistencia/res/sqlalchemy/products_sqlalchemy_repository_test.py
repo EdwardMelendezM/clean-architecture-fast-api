@@ -1,6 +1,6 @@
 import unittest
 from unittest.mock import patch, Mock
-from infrastructure.persistencia.res.sqlalchemy.products_sqlalchemy_repository import MySQLProductsRepository
+from infrastructure.persistencia.res.sqlalchemy.products_sqlalchemy_repository import SqlAlchemyProductsRepository
 from domain.products_entities import CreateBodyProduct, UpdateBodyProduct
 
 
@@ -8,7 +8,7 @@ class TestMySQLProductsRepository(unittest.TestCase):
     db_url = 'tu_db_url'
 
     def setUp(self):
-        self.repository = MySQLProductsRepository(self.db_url)
+        self.repository = SqlAlchemyProductsRepository(self.db_url)
 
     @patch('infrastructure.persistencia.res.sqlalchemy.products_sqlalchemy_repository.create_engine')
     @patch('infrastructure.persistencia.res.sqlalchemy.products_sqlalchemy_repository.sessionmaker')

@@ -8,7 +8,7 @@ from domain.products_repository import ProductsRepository
 from domain.products_usecase import ProductsUseCase
 
 
-class DefaultProductsUseCase(ProductsUseCase):
+class ProductsUCase(ProductsUseCase):
     def __init__(self, repository: ProductsRepository):
         self.repository = repository
 

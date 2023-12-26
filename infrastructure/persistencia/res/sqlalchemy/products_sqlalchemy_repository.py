@@ -10,7 +10,7 @@ from infrastructure.persistencia.res.sqlalchemy.products_sqlalchemy_model import
 from infrastructure.persistencia.res.sqlalchemy.products_sqlalchemy_helper import _map_entity_to_domain
 
 
-class MySQLProductsRepository(ProductsRepository):
+class SqlAlchemyProductsRepository(ProductsRepository):
     def __init__(self, db_url):
         engine = create_engine(db_url)
         Base.metadata.create_all(engine)

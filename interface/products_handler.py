@@ -1,24 +1,18 @@
-# En el archivo interface/products_api.py
-
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.responses import JSONResponse
-from typing import List
 
-from domain.products_entities import Product, CreateBodyProduct, UpdateBodyProduct
+from domain.products_entities import Product, CreateBodyProduct, UpdateBodyProduct, PaginatedProductList
+from domain.products_repository import ProductsRepository
 from domain.products_usecase import ProductsUseCase
-from infrastructure.persistencia.res.sqlalchemy.products_sqlalchemy_repository import MySQLProductsRepository
 
 app = FastAPI()
 
-# Configura el repositorio y el caso de uso
-db_url = "tu_url_de_conexion_a_la_base_de_datos"
-products_repository = MySQLProductsRepository(db_url)
-products_use_case = ProductsUseCase()
+db_url = "sqlite:///products.db"
+products_repository = ProductsRepository(db_url)
+products_use_case = ProductsUseCase(products_repository)
 
 
-# Rutas de la API
-
-@app.get('/products', response_model=List[Product])
+@app.get('/products', response_model=PaginatedProductList)
 def get_products(page: int = Query(1, gt=0), size_page: int = Query(10, gt=0, le=100)):
     """
     Retrieve a paginated list of products.
@@ -28,16 +22,11 @@ def get_products(page: int = Query(1, gt=0), size_page: int = Query(10, gt=0, le
     :param page: The page number to retrieve. Must be a positive integer (default: 1).
     :param size_page: The number of products to show per page. (default: 100)
 
-    :return: A list of products for the specified page.
-    :rtype: List[Product]
+    :return: A paginated list of products.
+    :rtype: PaginatedProductList
 
     :raises HTTPException 404: If the requested page is not found.
-
-    Example Usage:
-    - To retrieve the first page with 10 products: /products
-    - To retrieve the second page with 20 products: /products?page=1&size_page=100
     """
-
     # Retrieve the full list of products
     all_products = products_use_case.get_products()
 
@@ -46,7 +35,7 @@ def get_products(page: int = Query(1, gt=0), size_page: int = Query(10, gt=0, le
     end_idx = start_idx + size_page
 
     # Return the paginated list of products
-    return all_products[start_idx:end_idx]
+    return PaginatedProductList(items=all_products[start_idx:end_idx], total_items=len(all_products))
 
 
 @app.get('/products/{product_id}', response_model=Product)
@@ -63,11 +52,7 @@ def get_product(product_id: int):
     :rtype: Product
 
     :raises HTTPException 404: If the product with the specified ID is not found.
-
-    Example Usage:
-    - To retrieve information about a product with ID 123: /products/123
     """
-
     # Attempt to retrieve the product by ID
     product = products_use_case.get_product_by_id(product_id)
 
@@ -93,17 +78,7 @@ def create_product(product_body: CreateBodyProduct):
     :rtype: Product
 
     :raises HTTPException 400: If there is an error in the request body or the creation process.
-
-    Example Usage:
-    - To create a new product, send a POST request to /products with the product information in the request body.
-      Example request body:
-      {
-        "name": "New Product",
-        "price": 19.99,
-        "description": "A description for the new product."
-      }
     """
-
     try:
         # Attempt to create the new product
         new_product = products_use_case.create_product(product_body)
@@ -129,17 +104,7 @@ def update_product(product_id: int, update_body: UpdateBodyProduct):
     :rtype: Product
 
     :raises HTTPException 404: If the product with the specified ID is not found.
-
-    Example Usage:
-    - To update information for a product with ID 123, send a PUT request to /products/123 with the updated information in the request body.
-      Example request body:
-      {
-        "name": "Updated Product Name",
-        "price": 24.99,
-        "description": "Updated product description."
-      }
     """
-
     # Attempt to update the product by ID
     updated_product = products_use_case.update_product(product_id, update_body)
 
@@ -165,19 +130,9 @@ def delete_product(product_id: int):
     :rtype: JSONResponse
 
     :raises HTTPException 404: If the product with the specified ID is not found.
-
-    Example Usage:
-    - To delete a product with ID 123: send a DELETE request to /products/123
     """
-
     # Attempt to delete the product by ID
     products_use_case.delete_product(product_id)
 
     # Return a JSON response indicating successful deletion
     return JSONResponse(content={"message": "Product deleted successfully"})
-
-
-if __name__ == '__main__':
-    import uvicorn
-
-    uvicorn.run(app, host="127.0.0.1", port=8000, reload=True)
