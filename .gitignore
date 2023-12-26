@@ -1,5 +1,10 @@
+.env
+.env.local
+
 .venv/
 .idea/
+
 /build
 /dist
 __pycache__/
+
