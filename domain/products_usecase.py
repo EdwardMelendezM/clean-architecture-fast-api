@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import List, Optional
 
-from products_entities import Product, CreateBodyProduct, UpdateBodyProduct
+from domain.products_entities import Product, CreateBodyProduct, UpdateBodyProduct
 
 
 class ProductsUseCase(ABC):

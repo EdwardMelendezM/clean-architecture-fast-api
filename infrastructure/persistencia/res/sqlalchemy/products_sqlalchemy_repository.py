@@ -1,6 +1,4 @@
-# En el archivo infrastructure/mysql/products_repository.py
-
-from typing import List
+from typing import List, Optional
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
@@ -21,7 +19,7 @@ class SqlAlchemyProductsRepository(ProductsRepository):
             products = session.query(ProductEntity).all()
             return [_map_entity_to_domain(product) for product in products]
 
-    def get_product_by_id(self, product_id: int) -> Product:
+    def get_product_by_id(self, product_id: int) -> Optional[Product]:
         with self.Session() as session:
             product_entity = session.query(ProductEntity).filter_by(product_id=product_id).first()
             return _map_entity_to_domain(product_entity) if product_entity else None
@@ -34,7 +32,7 @@ class SqlAlchemyProductsRepository(ProductsRepository):
             session.commit()
             return _map_entity_to_domain(new_product)
 
-    def update_product(self, product_id: int, update_body: UpdateBodyProduct) -> Product:
+    def update_product(self, product_id: int, update_body: UpdateBodyProduct) -> Optional[Product]:
         with self.Session() as session:
             product_entity = session.query(ProductEntity).filter_by(product_id=product_id).first()
             if product_entity:

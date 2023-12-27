@@ -1,6 +1,3 @@
-# En el archivo domain/products_usecase.py
-
-from abc import ABC, abstractmethod
 from typing import List
 
 from domain.products_entities import Product, CreateBodyProduct, UpdateBodyProduct
