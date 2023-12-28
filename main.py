@@ -4,7 +4,8 @@ from usecase.products_usecase import ProductsUCase
 from interface import products_handler
 
 app = FastAPI()
-db_url = "sqlite:///db.sqlite3"
+db_url = ""
+
 products_repository = SqlAlchemyProductsRepository(db_url)
 products_use_case = ProductsUCase(products_repository)
 products_handler = products_handler.ProductsHandler(app, products_repository, products_use_case)

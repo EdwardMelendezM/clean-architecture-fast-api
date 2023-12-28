@@ -26,7 +26,7 @@ class SqlAlchemyProductsRepository(ProductsRepository):
 
     def create_product(self, product_body: CreateBodyProduct) -> Product:
         with self.Session() as session:
-            new_product = ProductEntity(name=product_body.name, price=product_body.price,
+            new_product = ProductEntity(name=product_body.name, price=int(product_body.price),
                                         description=product_body.description)
             session.add(new_product)
             session.commit()
@@ -37,7 +37,7 @@ class SqlAlchemyProductsRepository(ProductsRepository):
             product_entity = session.query(ProductEntity).filter_by(product_id=product_id).first()
             if product_entity:
                 product_entity.name = update_body.name
-                product_entity.price = update_body.price
+                product_entity.price = float(update_body.price)
                 product_entity.description = update_body.description
                 session.commit()
                 return _map_entity_to_domain(product_entity)
