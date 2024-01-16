@@ -7,4 +7,4 @@ deploy-local-products:
 	rm -f /dist
 
 create_mocks_products:
-    pytest
+#    pytest
