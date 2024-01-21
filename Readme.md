@@ -7,8 +7,8 @@
     make deploy-local-products
 ```
 
-- Create pod in kubernetes
+- Create mocks products
 ```{r}
-    make deploy-local-products
+    make create_mocks_products
 ```
 
