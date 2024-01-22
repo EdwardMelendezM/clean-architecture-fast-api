@@ -4,8 +4,8 @@ from usecase.products_usecase import ProductsUCase
 from interface import products_handler
 
 app = FastAPI()
-db_user = "myuser"
-db_password = "mypassword"
+db_user = "root"
+db_password = "dev001001seguro"
 db_host = "127.0.0.1"
 db_port = 3306
 db_name = "db_test"
