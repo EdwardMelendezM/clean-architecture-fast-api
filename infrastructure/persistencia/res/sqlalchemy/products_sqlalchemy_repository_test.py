@@ -5,8 +5,7 @@ from domain.products_entities import CreateBodyProduct, UpdateBodyProduct
 
 
 class TestMySQLProductsRepository(unittest.TestCase):
-    db_url = 'tu_db_url'
-
+    db_url = 'test_db'
     def setUp(self):
         self.repository = SqlAlchemyProductsRepository(self.db_url)
 
