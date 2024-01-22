@@ -2,3 +2,4 @@ pydantic~=2.5.3
 uvicorn~=0.26.0
 fastapi~=0.109.0
 SQLAlchemy~=2.0.25
+mysqlclient~=2.0.3
