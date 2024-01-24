@@ -12,6 +12,7 @@ class TestMySQLProductsRepository(unittest.TestCase):
     db_name = "db_test"
 
     db_url = f"mysql://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}"
+
     def setUp(self):
         self.repository = SqlAlchemyProductsRepository(self.db_url)
 
