@@ -25,3 +25,5 @@
 ```{r}
     make run-image-products
 ```
+
+## Edward estuvo aqui he hizo cambios para mejorar la documentacion
